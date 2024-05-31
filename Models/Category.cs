@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DB
 {
-    public class Categoria
+    public class Category
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public required string Nombre { get; set; }
+        public required string Name { get; set; }
     }
 }

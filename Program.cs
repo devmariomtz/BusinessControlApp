@@ -25,7 +25,9 @@ namespace BusinessControlApp
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<BusinessControlDBContext>();
-                context.Database.Migrate();
+                
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
             // Configure the HTTP request pipeline.
@@ -46,7 +48,7 @@ namespace BusinessControlApp
             // Configurar las rutas a nivel superior
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Login}/{id?}");
 
             // Llamar al método para configurar rutas personalizadas
             Routes.ConfigureRoutes(app);

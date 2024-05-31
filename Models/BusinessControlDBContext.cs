@@ -9,19 +9,37 @@ namespace DB
 
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Negocio> Negocios { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<ItemMenu> ItemsMenu { get; set; }
-        public DbSet<TipoUsuario> TiposUsuario { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Business> Business { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Usuario>().ToTable("usuarios");
-            modelBuilder.Entity<Negocio>().ToTable("negocios");
-            modelBuilder.Entity<Categoria>().ToTable("categoria");
-            modelBuilder.Entity<ItemMenu>().ToTable("items_menu");
-            modelBuilder.Entity<TipoUsuario>().ToTable("tipos_usuarios");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().ToTable("users");
+            modelBuilder.Entity<Business>().ToTable("business");
+            modelBuilder.Entity<Category>().ToTable("categories");
+            modelBuilder.Entity<MenuItem>().ToTable("menu_items");
+            modelBuilder.Entity<UserType>().ToTable("user_types");
+
+            // agregar datos iniciales
+            modelBuilder.Entity<UserType>().HasData(
+                new UserType { Id = 1, Type = "Admin" },
+                new UserType { Id = 2, Type = "User" }
+            );
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Names = "john",
+                    Lastnames = "smith",
+                    UserTypeId = 1,
+                    Password = "test",
+                    Email = "jonh@test.com"
+                }
+            );
         }
     }
 }
