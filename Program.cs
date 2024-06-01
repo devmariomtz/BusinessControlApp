@@ -1,6 +1,7 @@
-using DB;
+using BusinessControlApp.Models.DB;
 using Microsoft.EntityFrameworkCore;
-
+using AutoMapper;
+using BusinessControlApp.Mappings;
 namespace BusinessControlApp
 {
     public class Program
@@ -11,6 +12,9 @@ namespace BusinessControlApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Registrar AutoMapper
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             // Inyección de dependencias
             builder.Services.AddDbContext<BusinessControlDBContext>(options =>
@@ -25,10 +29,11 @@ namespace BusinessControlApp
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<BusinessControlDBContext>();
-                
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
             }
+
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -48,7 +53,7 @@ namespace BusinessControlApp
             // Configurar las rutas a nivel superior
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Login}/{id?}");
+                pattern: "{controller=Access}/{action=Login}/{id?}");
 
             // Llamar al método para configurar rutas personalizadas
             Routes.ConfigureRoutes(app);

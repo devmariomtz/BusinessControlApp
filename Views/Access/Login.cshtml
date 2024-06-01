@@ -1,0 +1,28 @@
+﻿@model UserViewModel;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AccessLayout.cshtml";
+}
+
+<form class="card card-body" asp-controller="Access" asp-action="Login" method="post">
+    <div class="mb-4">
+        <h1 class="text-center">Login</h1>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" />
+    </div>
+    <div class="mb-3">
+        <a class="" asp-area="" asp-controller="Access" asp-action="Register">Create an account</a>
+    </div>
+    <div class="text-end">
+        <button type="submit" class="btn btn-subtle me-2">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DB
+namespace BusinessControlApp.Models.DB
 {
     public class BusinessControlDBContext : DbContext
     {
@@ -36,8 +36,8 @@ namespace DB
                     Names = "john",
                     Lastnames = "smith",
                     UserTypeId = 1,
-                    Password = "test",
-                    Email = "jonh@test.com"
+                    Password = "123",
+                    Email = "jon@test.com"
                 }
             );
         }

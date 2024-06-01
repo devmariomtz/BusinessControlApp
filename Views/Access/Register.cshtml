@@ -1,0 +1,46 @@
+﻿@model List<UserTypeViewModel>
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AccessLayout.cshtml";
+}
+<form class="card card-body" method="post" asp-controller="User" asp-action="Create">
+    <div class="mb-4">
+        <h1 class="text-center">Create an account</h1>
+    </div>
+    <div class="mb-3">
+        <label for="Names" class="form-label">Name</label>
+        <input type="text" class="form-control" name="Names" id="Names" aria-describedby="Type your name" placeholder="Enter your name" maxlength="60" required />
+    </div>
+    <div class="mb-3">
+        <label for="Lastnames" class="form-label">Lastname</label>
+        <input type="text" class="form-control" id="Lastnames" name="Lastnames" aria-describedby="Type your lastname" placeholder="Enter your lastname" maxlength="60" required />
+    </div>
+    <div class="mb-3">
+        <label for="UserTypeId" class="form-label">User type</label>
+        <select id="UserTypeId" name="UserTypeId" class="form-select" required>
+            <option value="" hidden>Select a type</option>
+            @foreach (var t in Model)
+            {
+                <option value="@Html.DisplayFor(e => t.Id)">@Html.DisplayFor(e => t.Type)</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" placeholder="Enter your email address" />
+    </div>
+    <div class="mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="Password" name="Password" placeholder="Enter a password" />
+    </div>
+   @*  <div class="mb-3">
+        <a class="" asp-area="" asp-controller="Access" asp-action="Login">Already have an account?</a>
+    </div> *@
+    <div class="text-end">
+        <button type="submit" class="btn btn-subtle me-2">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+
