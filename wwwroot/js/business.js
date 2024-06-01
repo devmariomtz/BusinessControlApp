@@ -1,0 +1,2 @@
+﻿
+$('#businesses').DataTable();

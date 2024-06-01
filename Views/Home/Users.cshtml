@@ -1,11 +1,46 @@
-﻿@{
+﻿@model List<UserViewModel>;
+@{
     ViewData["Title"] = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="text-center">
     <div class="alert alert-success">
-        <h2 class="display-4">Soy la vistas para el ADMIN de: USERS</h2>
+        <h2 class="display-4">USERS</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end py-4">
+            <a class="btn btn-primary" asp-controller="Business" asp-action="Create">Create</a>
+        </div>
+        <div class="col-12">
+            <table id="usersTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Names</th>
+                        <th>LastNames</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.Names</td>
+                            <td>@user.Lastnames</td>
+                            <td>@user.Email</td>
+                            <td>@user.UserType.Type</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/users.js" asp-append-version="true"></script>
+}
 

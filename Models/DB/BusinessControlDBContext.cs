@@ -38,7 +38,7 @@ namespace BusinessControlApp.Models.DB
                     Lastnames = "admin",
                     UserTypeId = 1,
                     Password = "123",
-                    Email = "admintest.com"
+                    Email = "admin@test.com"
                 },
                 // usuario user
                 new User
@@ -48,10 +48,22 @@ namespace BusinessControlApp.Models.DB
                     Lastnames = "user",
                     UserTypeId = 2,
                     Password = "123",
-                    Email = "usertest.com"
+                    Email = "user@test.com"
                 }
 
             );
+            // agregar un negocio
+            modelBuilder.Entity<Business>().HasData(
+                new Business
+                {
+                    Id = 1,
+                    Name = "Negocio 1",
+                    Description = "Descripcion del negocio 1",
+                    CreationDate = System.DateTime.Now,
+                    UserId = 1
+                }
+            );
+
         }
     }
 }

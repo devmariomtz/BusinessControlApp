@@ -13,12 +13,15 @@ namespace BusinessControlApp.Models.DB
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual required User User { get; set; }
+        public virtual User User { get; set; }
+
+        public Business() { }
+
     }
 }

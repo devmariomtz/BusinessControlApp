@@ -1,10 +1,47 @@
-﻿@{
+﻿@model List<BusinessViewModel>;
+@{
     ViewData["Title"] = "Business";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="text-center">
     <div class="alert alert-success">
-        <h2 class="display-4">Soy la vistas para el ADMIN de: BUSINESS</h2>
+        <h2 class="display-4">BUSINESSES</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end py-4">
+            <a class="btn btn-primary" asp-controller="Business" asp-action="Create">Create</a>
+        </div>
+        <div class="col-12">
+            <table id="businesses" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>CreationDate</th>
+                        <th>UserOwner </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var business in Model)
+                    {
+                        <tr>
+                            <td>@business.Id</td>
+                            <td>@business.Name</td>
+                            <td>@business.Description</td>
+                            <td>@business.CreationDate</td>
+                            <td>@business.User.Names @business.User.Lastnames</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+@section Scripts {
+    <script src="~/js/business.js" asp-append-version="true"></script>
+}
+
+

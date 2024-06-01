@@ -15,6 +15,10 @@ namespace BusinessControlApp.Mappings
             // Mapeo para Tipo
             CreateMap<BusinessControlApp.Models.DB.UserType, BusinessControlApp.Models.UserTypeViewModel>();
 
+            // Mapeo para Negocio
+            CreateMap<BusinessControlApp.Models.DB.Business, BusinessControlApp.Models.BusinessViewModel>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+
         }
     }
 }

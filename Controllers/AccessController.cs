@@ -61,15 +61,12 @@ namespace BusinessControlApp.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             // according to the user type return the view
-            switch (user.UserType.Id)
+            return user.UserType.Id switch
             {
-                case 1:
-                    return RedirectToAction("Business", "Home");
-                case 2:
-                    return RedirectToAction("BusinessMenuItems", "Home");
-                default:
-                    return RedirectToAction("Login", "Access");
-            }
+                1 => RedirectToAction("Business", "Home"),
+                2 => RedirectToAction("BusinessMenuItems", "Home"),
+                _ => RedirectToAction("Login", "Access"),
+            };
         }
 
         public async Task<IActionResult> Register()

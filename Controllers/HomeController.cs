@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 
 namespace BusinessControlApp.Controllers
@@ -13,28 +14,33 @@ namespace BusinessControlApp.Controllers
     {
 
         private readonly BusinessControlDBContext _context;
-
         private readonly ILogger<HomeController> _logger;
+        private readonly IMapper _mapper;
 
-        public HomeController(BusinessControlDBContext context, ILogger<HomeController> logger)
+        public HomeController(BusinessControlDBContext context, ILogger<HomeController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
         // Options for ADMIN
         [Authorize(Roles = "Admin")]
-        public IActionResult Business()
+        public async Task<IActionResult> Business()
         {
-            return View();
+            var businesses = await _context.Business.Include(b => b.User).ToListAsync();
+            var businessesList = _mapper.Map<List<BusinessViewModel>>(businesses);
+            return View(businessesList);
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Users()
+        public async Task<IActionResult> Users()
         {
-            return View();
+            var userDB = await _context.Users.Include(u => u.UserType).ToListAsync();
+            var users = _mapper.Map<List<UserViewModel>>(userDB);
+            return View(users);
         }
         // Options for USER
-        [Authorize (Roles = "User")]
+        [Authorize(Roles = "User")]
         public IActionResult BusinessMenuItems()
         {
             return View();
