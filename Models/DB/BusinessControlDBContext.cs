@@ -30,15 +30,27 @@ namespace BusinessControlApp.Models.DB
                 new UserType { Id = 2, Type = "User" }
             );
             modelBuilder.Entity<User>().HasData(
+                // usuario admin
                 new User
                 {
                     Id = 1,
-                    Names = "john",
-                    Lastnames = "smith",
+                    Names = "admin",
+                    Lastnames = "admin",
                     UserTypeId = 1,
                     Password = "123",
-                    Email = "jon@test.com"
+                    Email = "admintest.com"
+                },
+                // usuario user
+                new User
+                {
+                    Id = 2,
+                    Names = "user",
+                    Lastnames = "user",
+                    UserTypeId = 2,
+                    Password = "123",
+                    Email = "usertest.com"
                 }
+
             );
         }
     }

@@ -11,8 +11,7 @@ namespace BusinessControlApp.Models
         public int UserTypeId { get; set; }
         public string Password { get; set; }
 
-        public UserTypeViewModel UserType { get; set; }
-
+        public virtual UserTypeViewModel UserType { get; set; }
         public UserViewModel() { }
     }
 }

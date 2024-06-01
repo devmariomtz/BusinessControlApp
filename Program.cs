@@ -1,5 +1,6 @@
 using BusinessControlApp.Models.DB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using AutoMapper;
 using BusinessControlApp.Mappings;
 namespace BusinessControlApp
@@ -12,6 +13,17 @@ namespace BusinessControlApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Cookies Auth
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Access/Login";
+                    options.LogoutPath = "/Access/Logout";
+                    options.AccessDeniedPath = "/Access/Privacy";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+
+                });
 
             // Registrar AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -43,6 +55,8 @@ namespace BusinessControlApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

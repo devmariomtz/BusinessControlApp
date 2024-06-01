@@ -2,6 +2,9 @@
 using BusinessControlApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,27 +26,50 @@ namespace BusinessControlApp.Controllers
             _mapper = mapper;
         }
         // Options for ACCESS
-        
+
         public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult LogOut()
+        public async Task<IActionResult> LogOut()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Access");
         }
 
         [HttpPost]
-        public IActionResult Login(UserViewModel _user)
+        public async Task<IActionResult> Login(UserViewModel _user)
         {
-            var user = _context.Users.Where(u => u.Email == _user.Email && u.Password == _user.Password).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Email == _user.Email && u.Password == _user.Password)
+                .Include(u => u.UserType).FirstOrDefault();
             if (user == null)
             {
                 return RedirectToAction("Login", "Access");
             }
+
             // retornar la vista de acuerdo al tipo de usuario
-            return RedirectToAction("Business", "Home");
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, user.Names ),
+                new("Email", user.Email),
+                new(ClaimTypes.Role, user.UserType.Type)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+            // according to the user type return the view
+            switch (user.UserType.Id)
+            {
+                case 1:
+                    return RedirectToAction("Business", "Home");
+                case 2:
+                    return RedirectToAction("BusinessMenuItems", "Home");
+                default:
+                    return RedirectToAction("Login", "Access");
+            }
         }
 
         public async Task<IActionResult> Register()
@@ -51,6 +77,11 @@ namespace BusinessControlApp.Controllers
             var types = await _context.UserTypes.ToListAsync();
             var typesList = _mapper.Map<List<UserTypeViewModel>>(types);
             return View(typesList);
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }

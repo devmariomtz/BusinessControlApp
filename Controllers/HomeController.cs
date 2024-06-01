@@ -3,9 +3,12 @@ using BusinessControlApp.Models.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace BusinessControlApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
@@ -19,15 +22,19 @@ namespace BusinessControlApp.Controllers
             _logger = logger;
         }
         // Options for ADMIN
+        [Authorize(Roles = "Admin")]
         public IActionResult Business()
         {
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Users()
         {
             return View();
         }
         // Options for USER
+        [Authorize (Roles = "User")]
         public IActionResult BusinessMenuItems()
         {
             return View();
