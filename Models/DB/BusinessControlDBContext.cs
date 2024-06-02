@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using BusinessControlApp.Models;
 
 namespace BusinessControlApp.Models.DB
 {

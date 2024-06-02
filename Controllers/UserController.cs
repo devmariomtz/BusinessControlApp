@@ -3,16 +3,21 @@ using BusinessControlApp.Models.DB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace BusinessControlApp.Controllers
 {
-    public class User : Controller
+    public class UserController : Controller
     {
         private readonly BusinessControlDBContext _context;
+        private readonly IMapper _mapper;
 
-        public User(BusinessControlDBContext context)
+        public UserController(BusinessControlDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: User
@@ -28,26 +33,30 @@ namespace BusinessControlApp.Controllers
         }
 
         // GET: User/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            var userTypesDB = await _context.UserTypes.ToListAsync();
+            var userTypes = _mapper.Map<List<UserTypeViewModel>>(userTypesDB);
+            ViewBag.UserTypes = userTypes.Select(ut => new SelectListItem
+            {
+                Value = ut.Id.ToString(),
+                Text = ut.Type
+            }).ToList();
+
             return View();
         }
 
         // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAPI()
+        public ActionResult Create(User _user)
         {
-            UserViewModel user = new();
-            Console.WriteLine("User: ");
-            Console.WriteLine(user);
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(_user);
                 _context.SaveChanges();
-                // sacar la id del usuario creado
-                // return RedirectToAction(nameof(Index));
-                return Ok(user);
+               // redireccionar a la vista de usuarios
+                return RedirectToAction("Users", "Home");
             }
             // retornar que no se pudo crear el usuario
             return BadRequest();
