@@ -38,7 +38,7 @@
                                 <a class="btn btn-primary" asp-controller="Business" asp-action="Edit" asp-route-id="@business.Id">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-controller="Business" asp-action="Delete" asp-route-id="@business.Id">
+                                <a class="btn btn-danger" asp-controller="Business" asp-action="Delete" asp-route-id="@business.Id" onclick="return confirm('Are you sure you want to delete this business?');">
                                     <i class="bi bi-trash3"></i>
                                 </a>
                             </td>

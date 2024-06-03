@@ -112,6 +112,7 @@ namespace BusinessControlApp.Controllers
         }
 
         // POST: Business/Create
+        [Authorize(Roles="Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Business _business)
@@ -139,6 +140,24 @@ namespace BusinessControlApp.Controllers
                 Text = ut.Names + " " + ut.Lastnames
             }).ToList();
             return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        // api para eliminar un business
+        public async Task<IActionResult> Delete(int? id)
+        {
+            try
+            {
+                var business = await _context.Business.FindAsync(id);
+                _context.Business.Remove(business);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Business", "Home");
+            }
+            catch
+            {
+                // retornar que no se pudo eliminar el usuario
+                return BadRequest();
+            }
         }
 
         // Options for ERROR
