@@ -29,7 +29,11 @@ namespace BusinessControlApp.Controllers
         {
             var businesses = await _context.Business.Include(b => b.User).ToListAsync();
             var businessesList = _mapper.Map<List<BusinessViewModel>>(businesses);
-            return View(businessesList);
+            var businessViewModel = new BusinessViewModel
+            {
+                Businesses = businessesList
+            };
+            return View(businessViewModel);
         }
 
         [Authorize(Roles = "Admin")]

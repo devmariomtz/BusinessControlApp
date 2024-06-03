@@ -12,7 +12,11 @@ namespace BusinessControlApp.Models
         public DateTime CreationDate { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
-
+        
         public BusinessViewModel() { }
+
+        // lista de business
+        public List<BusinessViewModel> Businesses { get; set; }
+
     }
 }

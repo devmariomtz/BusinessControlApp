@@ -1,4 +1,4 @@
-﻿@model List<BusinessViewModel>;
+﻿@model BusinessViewModel;
 @{
     ViewData["Title"] = "Business";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,22 +17,31 @@
             <table id="businesses" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th class="text-start">Id</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>CreationDate</th>
                         <th>UserOwner </th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var business in Model)
+                    @foreach (var business in Model.Businesses)
                     {
                         <tr>
-                            <td>@business.Id</td>
-                            <td>@business.Name</td>
-                            <td>@business.Description</td>
-                            <td>@business.CreationDate</td>
-                            <td>@business.User.Names @business.User.Lastnames</td>
+                            <td class="text-center">@business.Id</td>
+                            <td class="align-middle">@business.Name</td>
+                            <td class="align-middle">@business.Description</td>
+                            <td class="align-middle">@business.CreationDate</td>
+                            <td class="align-middle">@business.User.Names @business.User.Lastnames</td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" asp-controller="Business" asp-action="Edit" asp-route-id="@business.Id">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-controller="Business" asp-action="Delete" asp-route-id="@business.Id">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>

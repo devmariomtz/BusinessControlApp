@@ -1,2 +1,5 @@
 ﻿
-$('#businesses').DataTable();
+$(document).ready(function () {
+    $('#businesses').DataTable();
+});
+
