@@ -16,22 +16,31 @@
             <table id="usersTable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th class="text-start">Id</th>
                         <th>Names</th>
                         <th>LastNames</th>
                         <th>Email</th>
                         <th>Type</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <td>@user.Id</td>
-                            <td>@user.Names</td>
-                            <td>@user.Lastnames</td>
-                            <td>@user.Email</td>
-                            <td>@user.UserType.Type</td>
+                            <td class="text-center">@user.Id</td>
+                            <td class="align-middle">@user.Names</td>
+                            <td class="align-middle">@user.Lastnames</td>
+                            <td class="align-middle">@user.Email</td>
+                            <td class="align-middle">@user.UserType.Type</td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" onclick="return confirm('Are you sure you want to delete this user?');">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>

@@ -67,5 +67,6 @@ namespace BusinessControlApp.Models.DB
 
         }
         public DbSet<BusinessControlApp.Models.BusinessViewModel> BusinessViewModel { get; set; }
+        public DbSet<BusinessControlApp.Models.UserViewModel> UserViewModel { get; set; }
     }
 }

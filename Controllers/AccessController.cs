@@ -53,6 +53,7 @@ namespace BusinessControlApp.Controllers
             {
                 new(ClaimTypes.Name, user.Names ),
                 new("Email", user.Email),
+                new("Id", user.Id.ToString()),
                 new(ClaimTypes.Role, user.UserType.Type)
             };
 

@@ -143,7 +143,6 @@ namespace BusinessControlApp.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        // api para eliminar un business
         public async Task<IActionResult> Delete(int? id)
         {
             try

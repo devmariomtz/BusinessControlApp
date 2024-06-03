@@ -39,7 +39,11 @@ namespace BusinessControlApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Users()
         {
-            var userDB = await _context.Users.Include(u => u.UserType).ToListAsync();
+            // sacar de la sesion el usuario
+            var idUser = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value;
+            Console.WriteLine("ID USER: " + idUser);
+            // obtener los usuarios menos el usuario que esta logueado
+            var userDB = await _context.Users.Where(u => u.Id != int.Parse(idUser)).Include(u => u.UserType).ToListAsync();
             var users = _mapper.Map<List<UserViewModel>>(userDB);
             return View(users);
         }
