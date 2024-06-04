@@ -49,9 +49,11 @@ namespace BusinessControlApp.Controllers
         }
         // Options for USER
         [Authorize(Roles = "User")]
-        public IActionResult BusinessMenuItems()
+        public async Task<IActionResult> BusinessMenuItems()
         {
-            return View();
+            var menuItemsDb = await _context.MenuItems.Include(m => m.Category).Include(i => i.Business).ToListAsync();
+            var menuItems = _mapper.Map<List<MenuItemViewModel>>(menuItemsDb);
+            return View(menuItems);
         }
 
         // Options for ERROR

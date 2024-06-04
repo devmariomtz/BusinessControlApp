@@ -65,8 +65,38 @@ namespace BusinessControlApp.Models.DB
                 }
             );
 
+            // agregar catagorias
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Categoria 1" },
+                new Category { Id = 2, Name = "Categoria 2" }
+            );
+
+            // agregar menu items
+            modelBuilder.Entity<MenuItem>().HasData(
+                new MenuItem
+                {
+                    Id = 1,
+                    Name = "Item 1",
+                    Description = "Descripcion del item 1",
+                    Price = 100,
+                    CategoryId = 1,
+                    BusinessId = 1
+                },
+                new MenuItem
+                {
+                    Id = 2,
+                    Name = "Item 2",
+                    Description = "Descripcion del item 2",
+                    Price = 200,
+                    CategoryId = 2,
+                    BusinessId = 1
+                }
+            );
+
+
         }
         public DbSet<BusinessControlApp.Models.BusinessViewModel> BusinessViewModel { get; set; }
         public DbSet<BusinessControlApp.Models.UserViewModel> UserViewModel { get; set; }
+        public DbSet<BusinessControlApp.Models.MenuItemViewModel> MenuItemViewModel { get; set; }
     }
 }

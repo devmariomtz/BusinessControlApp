@@ -19,6 +19,14 @@ namespace BusinessControlApp.Mappings
             CreateMap<BusinessControlApp.Models.DB.Business, BusinessControlApp.Models.BusinessViewModel>()
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
 
+            // Mapeo para Categoria
+            CreateMap<BusinessControlApp.Models.DB.Category, BusinessControlApp.Models.CategoryViewModel>();
+
+            // Mapero para Menu
+            CreateMap<BusinessControlApp.Models.DB.MenuItem, BusinessControlApp.Models.MenuItemViewModel>()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+                .ForMember(dest => dest.Business, opt => opt.MapFrom(src => src.Business));
+
         }
     }
 }

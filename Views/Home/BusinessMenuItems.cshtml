@@ -1,11 +1,57 @@
-﻿@{
+﻿@model List<MenuItemViewModel>
+@{
     ViewData["Title"] = "BusinessMenuItems";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="text-center">
     <div class="alert alert-success">
-        <h2 class="display-4">Soy la vistas para el USER de: MENU ITEMS</h2>
+        <h2 class="display-4">MENU ITEMS</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end py-4">
+            <a class="btn btn-primary" asp-controller="MenuItem" asp-action="Create">Create</a>
+        </div>
+        <div class="col-12 overflow-auto">
+            <table id="items" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-start">Id</th>
+                        <th>Business Name</th>
+                        <th>Item Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Price </th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.Id</td>
+                            <td class="text-center">@item.Business.Name</td>
+                            <td class="align-middle">@item.Name</td>
+                            <td class="align-middle">@item.Description</td>
+                            <td class="align-middle">@item.Category.Name</td>
+                            <td class="align-middle">$ @item.Price</td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" asp-controller="MenuItem" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-controller="MenuItem" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this item?');">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+@section Scripts {
+    <script src="~/js/menuItems.js" asp-append-version="true"></script>
+}
+
 

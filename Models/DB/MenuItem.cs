@@ -8,15 +8,17 @@ namespace BusinessControlApp.Models.DB
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public double Price { get; set; }
         public int CategoryId { get; set; }
         public int BusinessId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public virtual required Category Category { get; set; }
+        public virtual Category Category { get; set; }
         [ForeignKey("BusinessId")]
-        public virtual required Business Business { get; set; }
+        public virtual Business Business { get; set; }
+
+        public MenuItem() { }
     }
 }

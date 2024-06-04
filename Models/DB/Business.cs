@@ -20,6 +20,7 @@ namespace BusinessControlApp.Models.DB
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
+        public List<MenuItem> MenuItems { get; set; }
 
         public Business() { }
 
