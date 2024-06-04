@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace BusinessControlApp.Controllers
@@ -53,6 +54,13 @@ namespace BusinessControlApp.Controllers
         {
             var menuItemsDb = await _context.MenuItems.Include(m => m.Category).Include(i => i.Business).ToListAsync();
             var menuItems = _mapper.Map<List<MenuItemViewModel>>(menuItemsDb);
+            var catogoriesDB = await _context.Categories.ToListAsync();
+            var categories = _mapper.Map<List<CategoryViewModel>>(catogoriesDB);
+            ViewBag.Categories = categories.Select(ut => new SelectListItem
+            {
+                Value = ut.Id.ToString(),
+                Text = ut.Name
+            }).ToList();
             return View(menuItems);
         }
 
